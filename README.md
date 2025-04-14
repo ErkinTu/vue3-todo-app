@@ -6,53 +6,50 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 
 **Установка необходимых зависимостей**
 
+```bash
 npm install
 
 npm install vue-router@4 pinia
 npm install tailwindcss postcss autoprefixer
 npm install uuid
+```
 
 ```plaintxet
 vue3-todo-app/
-│
-├── public/              # Статические файлы
-│   └── favicon.ico
-│
-├── src/                 # Исходный код
-│   ├── assets/          # Ресурсы (изображения, стили)
-│   │   └── main.css     # Главный CSS файл с импортом Tailwind
-│   │
-│   ├── components/      # Компоненты Vue
-│   │   ├── common/      # Переиспользуемые UI компоненты
-│   │   └── todo/        # Компоненты связанные с функционалом Todo
-│   │
-│   ├── composables/     # Переиспользуемая бизнес-логика (composition API)
-│   │   └── useTodos.js  # Логика для работы с задачами
-│   │
-│   ├── layouts/         # Шаблоны страниц
-│   │   └── MainLayout.vue
-│   │
-│   ├── router/          # Настройки маршрутизации
-│   │   └── index.js
-│   │
-│   ├── stores/          # Pinia хранилища
-│   │   └── todo.js
-│   │
-│   ├── utils/           # Вспомогательные функции
-│   │   └── localStorage.js
-│   │
-│   ├── views/           # Страницы
-│   │   ├── HomeView.vue
-│   │   ├── TodoListView.vue
-│   │   └── TodoDetailView.vue
-│   │
-│   ├── App.vue          # Корневой компонент
-│   └── main.css          # Точка входа
-│
-├── index.html           # HTML шаблон
-├── tailwind.config.js   # Конфигурация Tailwind
-├── postcss.config.js    # Конфигурация PostCSS
-├── vite.config.js       # Конфигурация Vite
-├── package.json         # Зависимости и скрипты проекта
-└── README.md            # Документация проекта
+├── index.html                     # HTML шаблон
+├── vite.config.js                 # Конфигурация Vite
+├── tailwind.config.js             # Конфигурация Tailwind
+├── postcss.config.js              # Конфигурация PostCSS
+├── package.json                   # Зависимости
+└── src/
+    ├── main.js                    # Точка входа
+    ├── App.vue                    # Корневой компонент
+    ├── assets/
+    │   └── main.css               # Стили
+    ├── components/
+    │   ├── common/
+    │   │   ├── BaseButton.vue
+    │   │   └── BaseInput.vue
+    │   ├── layout/
+    │   │   ├── TheHeader.vue
+    │   │   ├── TheFooter.vue
+    │   │   └── NavBar.vue
+    │   └── todo/
+    │       ├── TodoItem.vue
+    │       ├── TodoFilter.vue
+    │       └── TodoStatsCard.vue
+    ├── composables/
+    │   └── useTodos.js
+    ├── layouts/
+    │   └── MainLayout.vue
+    ├── router/
+    │   └── index.js
+    ├── stores/
+    │   └── todo.js
+    ├── utils/
+    │   └── localStorage.js
+    └── views/
+        ├── HomeView.vue
+        ├── TodoListView.vue
+        └── TodoDetailView.vue
 ```
