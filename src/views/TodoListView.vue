@@ -1,24 +1,23 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { useTodos } from '../composables/useTodos'
+import {ref} from 'vue'
+import {useTodos} from '../composables/useTodos'
 import BaseInput from '../components/common/BaseInput.vue'
 import BaseButton from '../components/common/BaseButton.vue'
 import TodoItem from '../components/todo/TodoItem.vue'
 import TodoFilter from '../components/todo/TodoFilter.vue'
+import Pagination from '../components/todo/Pagination.vue'
 
-const { todos, addTodo } = useTodos()
+// Используем обновленный composable с опциями пагинации
+const {
+  addTodo,
+  filter,
+  paginatedTodos,
+  currentPage,
+  totalPages,
+  setPage
+} = useTodos({perPage: 10})
+
 const newTodoTitle = ref('')
-const filter = ref('all') // 'all', 'active', 'completed'
-
-// Отфильтрованный список задач
-const filteredTodos = computed(() => {
-  if (filter.value === 'active') {
-    return todos.value.filter(todo => !todo.completed)
-  } else if (filter.value === 'completed') {
-    return todos.value.filter(todo => todo.completed)
-  }
-  return todos.value
-})
 
 // Обработчик создания новой задачи
 function handleAddTodo() {
@@ -30,6 +29,12 @@ function handleAddTodo() {
 
 function updateFilter(newFilter) {
   filter.value = newFilter
+  // Сбрасываем страницу при изменении фильтра
+  setPage(1)
+}
+
+function handlePageChange(page) {
+  setPage(page)
 }
 </script>
 
@@ -63,11 +68,17 @@ function updateFilter(newFilter) {
         class="mb-6"
     />
 
-    <div v-if="filteredTodos.length" class="space-y-4">
+    <div v-if="paginatedTodos.length" class="space-y-4">
       <TodoItem
-          v-for="todo in filteredTodos"
+          v-for="todo in paginatedTodos"
           :key="todo.id"
           :todo="todo"
+      />
+
+      <Pagination
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @update:page="handlePageChange"
       />
     </div>
     <div v-else class="bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
