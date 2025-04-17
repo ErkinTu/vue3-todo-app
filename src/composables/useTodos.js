@@ -1,8 +1,12 @@
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useTodoStore } from '../stores/todo'
 
-export function useTodos() {
+export function useTodos(options = { perPage: 5 }) {
     const todoStore = useTodoStore()
+
+    // Пагинация
+    const currentPage = ref(1)
+    const perPage = ref(options.perPage)
 
     // Получаем состояние через геттеры
     const todos = computed(() => todoStore.todos)
@@ -11,6 +15,49 @@ export function useTodos() {
 
     // Получаем методы
     const { addTodo, removeTodo, toggleTodo } = todoStore
+
+    // Функции для работы с пагинацией
+    const totalPages = computed(() => {
+        return Math.ceil(filteredTodos.value.length / perPage.value)
+    })
+
+    const setPage = (page) => {
+        if (page < 1) page = 1
+        if (page > totalPages.value) page = totalPages.value
+        currentPage.value = page
+    }
+
+    const nextPage = () => {
+        if (currentPage.value < totalPages.value) {
+            currentPage.value++
+        }
+    }
+
+    const prevPage = () => {
+        if (currentPage.value > 1) {
+            currentPage.value--
+        }
+    }
+
+    // Указатель на текущий фильтр (перенесено из компонента)
+    const filter = ref('all') // 'all', 'active', 'completed'
+
+    // Отфильтрованные задачи
+    const filteredTodos = computed(() => {
+        if (filter.value === 'active') {
+            return todos.value.filter(todo => !todo.completed)
+        } else if (filter.value === 'completed') {
+            return todos.value.filter(todo => todo.completed)
+        }
+        return todos.value
+    })
+
+    // Задачи текущей страницы
+    const paginatedTodos = computed(() => {
+        const startIndex = (currentPage.value - 1) * perPage.value
+        const endIndex = startIndex + perPage.value
+        return filteredTodos.value.slice(startIndex, endIndex)
+    })
 
     // Дополнительные функции
     const getTodoById = (id) => {
@@ -36,6 +83,19 @@ export function useTodos() {
         getTodoById,
         addTodo,
         removeTodo,
-        toggleTodo
+        toggleTodo,
+
+        // Пагинация
+        currentPage,
+        perPage,
+        totalPages,
+        setPage,
+        nextPage,
+        prevPage,
+        paginatedTodos,
+
+        // Фильтры
+        filter,
+        filteredTodos
     }
 }
