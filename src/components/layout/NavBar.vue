@@ -24,6 +24,7 @@ function toggleMobileMenu() {
           {{ todoStats.total }}
         </span>
       </router-link>
+      <router-link to="/easy-pagination-example" class="hover:text-blue-200 transition-colors">Пагинация</router-link>
     </div>
 
     <!-- Mobile Menu Button -->
