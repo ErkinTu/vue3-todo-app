@@ -69,11 +69,17 @@ function handlePageChange(page) {
     />
 
     <div v-if="paginatedTodos.length" class="space-y-4">
-      <TodoItem
-          v-for="todo in paginatedTodos"
-          :key="todo.id"
-          :todo="todo"
-      />
+      <TransitionGroup
+          tag="div"
+          name="todo-list"
+          class="space-y-4"
+      >
+        <TodoItem
+            v-for="todo in paginatedTodos"
+            :key="todo.id"
+            :todo="todo"
+        />
+      </TransitionGroup>
 
       <Pagination
           :current-page="currentPage"
@@ -87,3 +93,9 @@ function handlePageChange(page) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.todo-list-move {
+  transition: transform 0.3s ease;
+}
+</style>

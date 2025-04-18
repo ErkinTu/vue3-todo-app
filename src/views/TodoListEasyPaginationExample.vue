@@ -4,16 +4,15 @@
       <!-- Заголовок -->
       <div>
         <h2 class="text-xl font-bold mb-4">📋 Список элементов (пагинация)</h2>
-
-        <ul class="space-y-2 mb-4 grow">
-          <li
-              v-for="item in paginatedItems"
-              :key="item.id"
-              class="p-3 bg-gray-100 rounded shadow-sm"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
+          <ul class="space-y-2 mb-4 grow">
+            <li
+                v-for="item in paginatedItems"
+                :key="item.id"
+                class="p-3 bg-gray-100 rounded shadow-sm"
+            >
+              {{ item.name }}
+            </li>
+          </ul>
       </div>
 
       <!-- Навигация по страницам -->
