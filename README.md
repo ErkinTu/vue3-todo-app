@@ -12,6 +12,7 @@ npm install
 npm install vue-router@4 pinia
 npm install tailwindcss postcss autoprefixer
 npm install uuid
+npm install @vueuse/motion   # for animations
 ```
 
 ```plaintxet
