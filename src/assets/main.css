@@ -3,3 +3,10 @@
 @tailwind utilities;
 
 /* Дополнительные глобальные стили */
+
+/* Плавное переключение темы */
+@layer base {
+    * {
+        @apply transition-colors duration-200;
+    }
+}
