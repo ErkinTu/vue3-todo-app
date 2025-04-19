@@ -5,7 +5,7 @@ const { todoStats } = useTodos()
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800 dark:text-gray-100">
+  <div class="bg-white rounded-lg shadow-lg p-6 dark:bg-gray-800 dark:text-gray-100 dark:shadow-lg dark:shadow-gray-900">
     <h2 class="text-xl font-semibold mb-4">Статистика задач</h2>
 
     <div class="space-y-4">
@@ -38,5 +38,4 @@ const { todoStats } = useTodos()
       </div>
     </div>
   </div>
-
 </template>

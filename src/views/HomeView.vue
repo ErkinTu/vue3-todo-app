@@ -35,28 +35,28 @@ const { todoStats } = useTodos()
       </h2>
 
       <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 dark:text-gray-100">
+        <div class="bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800 dark:text-gray-100 dark:shadow-lg dark:shadow-gray-900">
           <h3 class="text-lg font-semibold mb-2">Локальное хранение</h3>
           <p class="text-gray-600 dark:text-gray-300">
             Ваши задачи сохраняются в браузере и будут доступны даже после перезагрузки страницы.
           </p>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 dark:text-gray-100">
+        <div class="bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800 dark:text-gray-100 dark:shadow-lg dark:shadow-gray-900">
           <h3 class="text-lg font-semibold mb-2">Простой интерфейс</h3>
           <p class="text-gray-600 dark:text-gray-300">
             Интуитивно понятное управление задачами с минимумом необходимых действий.
           </p>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 dark:text-gray-100">
+        <div class="bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800 dark:text-gray-100 dark:shadow-lg dark:shadow-gray-900">
           <h3 class="text-lg font-semibold mb-2">Статистика</h3>
           <p class="text-gray-600 dark:text-gray-300">
             Удобное отслеживание прогресса выполнения ваших задач.
           </p>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 dark:text-gray-100">
+        <div class="bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800 dark:text-gray-100 dark:shadow-lg dark:shadow-gray-900">
           <h3 class="text-lg font-semibold mb-2">Адаптивный дизайн</h3>
           <p class="text-gray-600 dark:text-gray-300">
             Работает на всех устройствах — от смартфона до десктопа.
