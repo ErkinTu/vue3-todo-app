@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useTodos } from '@/composables/useTodos'
+import ThemeToggle from "@/components/common/ThemeToggle.vue";
 
 const { todoStats } = useTodos()
 const isMobileMenuOpen = ref(false)
@@ -25,6 +26,7 @@ function toggleMobileMenu() {
         </span>
       </router-link>
       <router-link to="/easy-pagination-example" class="hover:text-blue-200 transition-colors">Пагинация</router-link>
+      <ThemeToggle />
     </div>
 
     <!-- Mobile Menu Button -->
