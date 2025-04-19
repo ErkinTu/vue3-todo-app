@@ -40,17 +40,17 @@ function handlePageChange(page) {
 
 <template>
   <div>
-    <h1 class="text-3xl font-bold mb-8">Мои задачи</h1>
+    <h1 class="text-3xl font-bold mb-8 dark:text-gray-100">Мои задачи</h1>
 
-    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-      <h2 class="text-lg font-semibold mb-4">Добавить новую задачу</h2>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8 dark:bg-gray-800 dark:text-gray-200">
+      <h2 class="text-lg font-semibold mb-4 dark:text-gray-100">Добавить новую задачу</h2>
 
       <div class="flex flex-col md:flex-row gap-4">
         <BaseInput
             v-model="newTodoTitle"
             placeholder="Что нужно сделать?"
             @keyup.enter="handleAddTodo"
-            class="flex-grow"
+            class="flex-grow dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
         />
         <BaseButton
             @click="handleAddTodo"
@@ -65,7 +65,7 @@ function handlePageChange(page) {
     <TodoFilter
         :filter="filter"
         @update:filter="updateFilter"
-        class="mb-6"
+        class="mb-6 dark:bg-gray-800 dark:text-gray-200"
     />
 
     <div v-if="paginatedTodos.length" class="space-y-4">
@@ -81,9 +81,10 @@ function handlePageChange(page) {
           @update:page="handlePageChange"
       />
     </div>
-    <div v-else class="bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
-      <p v-if="filter !== 'all'">Нет задач, соответствующих выбранному фильтру</p>
-      <p v-else>У вас пока нет задач. Создайте первую!</p>
+
+    <div v-else class="bg-white rounded-lg shadow-md p-6 text-center text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+      <p v-if="filter !== 'all'" class="dark:text-gray-300">Нет задач, соответствующих выбранному фильтру</p>
+      <p v-else class="dark:text-gray-300">У вас пока нет задач. Создайте первую!</p>
     </div>
   </div>
 </template>
