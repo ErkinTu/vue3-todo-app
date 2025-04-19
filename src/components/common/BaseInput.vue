@@ -49,7 +49,11 @@ const inputClasses = computed(() => {
         :placeholder="placeholder"
         :disabled="disabled"
         @input="updateValue"
-        :class="inputClasses"
+        :class="[
+      inputClasses,
+      'bg-white text-gray-900 border border-gray-300 placeholder-gray-400',
+      'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:placeholder-gray-500'
+    ]"
     />
     <p v-if="error" class="mt-1 text-sm text-red-600">{{ error }}</p>
   </div>

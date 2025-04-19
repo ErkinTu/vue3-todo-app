@@ -3,13 +3,13 @@
     <div class="flex flex-col justify-between min-h-[400px]">
       <!-- Заголовок -->
       <div>
-        <h2 class="text-xl font-bold mb-4">📋 Список элементов (пагинация)</h2>
+        <h2 class="text-xl font-bold mb-4 dark:text-gray-100">📋 Список элементов (пагинация)</h2>
 
         <ul class="space-y-2 mb-4 grow">
           <li
               v-for="item in paginatedItems"
               :key="item.id"
-              class="p-3 bg-gray-100 rounded shadow-sm"
+              class="p-3 bg-gray-100 rounded shadow-sm dark:bg-gray-700 dark:text-gray-200"
           >
             {{ item.name }}
           </li>
@@ -22,17 +22,19 @@
           <button
               @click="prevPage"
               :disabled="currentPage === 1"
-              class="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50"
+              class="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50 dark:bg-blue-600 dark:text-gray-200"
           >
             ⬅ Назад
           </button>
 
-          <span class="font-semibold">Страница {{ currentPage }} из {{ totalPages }}</span>
+          <span class="font-semibold dark:text-gray-100">
+          Страница {{ currentPage }} из {{ totalPages }}
+        </span>
 
           <button
               @click="nextPage"
               :disabled="currentPage === totalPages"
-              class="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50"
+              class="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50 dark:bg-blue-600 dark:text-gray-200"
           >
             Вперёд ➡
           </button>
@@ -40,6 +42,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 

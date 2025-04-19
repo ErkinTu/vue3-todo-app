@@ -50,7 +50,7 @@ const pageNumbers = () => {
 </script>
 
 <template>
-  <div v-if="totalPages > 1" class="flex justify-center space-x-2 mt-4">
+  <div v-if="totalPages > 1" class="flex justify-center space-x-2 mt-4 dark:text-gray-100">
     <!-- Кнопка "Назад" -->
     <BaseButton
         variant="secondary"
@@ -64,7 +64,7 @@ const pageNumbers = () => {
 
     <!-- Номера страниц -->
     <template v-for="(page, index) in pageNumbers()" :key="index">
-      <span v-if="page === '...'" class="flex items-center px-2">...</span>
+      <span v-if="page === '...'" class="flex items-center px-2 dark:text-gray-400">...</span>
       <BaseButton
           v-else
           :variant="page === currentPage ? 'primary' : 'secondary'"

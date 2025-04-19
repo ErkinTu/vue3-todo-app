@@ -29,11 +29,11 @@ const props = defineProps({
 
 const variantClasses = computed(() => {
   const variants = {
-    primary: 'bg-blue-500 hover:bg-blue-700 text-white dark:bg-blue-600 dark:hover:bg-blue-800',
-    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200',
-    success: 'bg-green-600 hover:bg-green-700 text-white dark:bg-green-700 dark:hover:bg-green-800',
-    danger: 'bg-red-600 hover:bg-red-700 text-white dark:bg-red-700 dark:hover:bg-red-800',
-    warning: 'bg-yellow-500 hover:bg-yellow-600 text-white dark:bg-yellow-600 dark:hover:bg-yellow-700'
+    primary: 'bg-blue-500 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800',
+    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200',
+    success: 'bg-green-600 hover:bg-green-700 text-white dark:bg-green-800 dark:hover:bg-green-900',
+    danger: 'bg-red-600 hover:bg-red-700 text-white dark:bg-red-800 dark:hover:bg-red-900',
+    warning: 'bg-yellow-500 hover:bg-yellow-600 text-white dark:bg-yellow-700 dark:hover:bg-yellow-800'
   }
 
   return variants[props.variant]
