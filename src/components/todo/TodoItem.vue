@@ -16,6 +16,13 @@ function confirmDelete() {
     removeTodo(props.todo.id)
   }
 }
+
+// Объект для стилей важности задачи
+const importanceStyles = {
+  low: 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
+  normal: 'bg-blue-100 text-blue-600 dark:bg-blue-700 dark:text-blue-300',
+  high: 'bg-red-100 text-red-600 dark:bg-red-700 dark:text-red-300'
+}
 </script>
 
 <template>
@@ -27,10 +34,10 @@ function confirmDelete() {
       <div
           class="w-5 h-5 border-2 rounded-full mr-3 cursor-pointer flex items-center justify-center"
           :class="[
-        props.todo.completed
-          ? 'bg-green-500 border-green-500'
-          : 'border-gray-400 dark:border-gray-600'
-      ]"
+          props.todo.completed
+            ? 'bg-green-500 border-green-500'
+            : 'border-gray-400 dark:border-gray-600'
+        ]"
           @click="toggleTodo(props.todo.id)"
       >
         <svg
@@ -50,14 +57,29 @@ function confirmDelete() {
         </svg>
       </div>
 
-      <span
-          class="flex-grow"
-          :class="{
-        'line-through text-gray-500 dark:text-gray-400': props.todo.completed
-      }"
-      >
-      {{ props.todo.title }}
-    </span>
+      <div class="flex-grow">
+        <div class="flex items-center">
+          <span
+              class="font-medium"
+              :class="{
+              'line-through text-gray-500 dark:text-gray-400': props.todo.completed
+            }"
+          >
+            {{ props.todo.title }}
+          </span>
+
+          <span
+              class="ml-2 px-2 py-0.5 text-xs rounded-full"
+              :class="importanceStyles[props.todo.importance || 'normal']"
+          >
+            {{ props.todo.importance || 'normal' }}
+          </span>
+        </div>
+
+        <p v-if="props.todo.description" class="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-1">
+          {{ props.todo.description }}
+        </p>
+      </div>
 
       <div class="flex space-x-2">
         <BaseButton
@@ -77,5 +99,4 @@ function confirmDelete() {
       </div>
     </div>
   </div>
-
 </template>
