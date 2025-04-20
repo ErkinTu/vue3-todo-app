@@ -108,6 +108,8 @@ export function useTodos(options = { perPage: 5 }) {
             total: todos.value ? todos.value.length : 0,
             completed: completedTodos.value ? completedTodos.value.length : 0,
             incomplete: incompleteTodos.value ? incompleteTodos.value.length : 0,
+            lowPriority: todos.value ? todos.value.filter(todo => todo.importance === 'low').length : 0,
+            normalPriority: todos.value ? todos.value.filter(todo => todo.importance === 'normal').length : 0,
             highPriority: todos.value ? todos.value.filter(todo => todo.importance === 'high').length : 0,
             percentCompleted: todos.value && todos.value.length
                 ? Math.round((completedTodos.value.length / todos.value.length) * 100)
