@@ -39,6 +39,7 @@ export function saveTodos(todos) {
 }
 
 // Дополнительная функция для обновления определенной задачи
+/*
 export function updateTodo(updatedTodo) {
     const todos = getTodos()
     const index = todos.findIndex(todo => todo.id === updatedTodo.id)
@@ -50,3 +51,4 @@ export function updateTodo(updatedTodo) {
     }
     return false
 }
+*/
