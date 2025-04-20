@@ -8,20 +8,64 @@ export function useTodos(options = { perPage: 5 }) {
     const currentPage = ref(1)
     const perPage = ref(options.perPage)
 
+    // Поиск
+    const searchQuery = ref('')
+
     // Получаем состояние через геттеры
     const todos = computed(() => todoStore.todos)
     const completedTodos = computed(() => todoStore.completedTodos)
     const incompleteTodos = computed(() => todoStore.incompleteTodos)
-    const lowPriorityTodos = computed(() => todoStore.lowPriorityTodos)
-    const normalPriorityTodos = computed(() => todoStore.normalPriorityTodos)
-    const highPriorityTodos = computed(() => todoStore.highPriorityTodos)
 
     // Получаем методы
     const { addTodo, removeTodo, toggleTodo, updateTodoDetails } = todoStore
 
+    // Указатель на текущий фильтр
+    const filter = ref('all') // 'all', 'active', 'completed'
+
+    // Фильтр по важности
+    const importanceFilter = ref('all') // 'all', 'low', 'normal', 'high'
+
+    // Отфильтрованные задачи по статусу и важности
+    const statusFilteredTodos = computed(() => {
+        if (filter.value === 'active') {
+            return todos.value.filter(todo => !todo.completed)
+        } else if (filter.value === 'completed') {
+            return todos.value.filter(todo => todo.completed)
+        }
+        return todos.value
+    })
+
+    // Добавляем фильтрацию по важности
+    const statusAndImportanceFilteredTodos = computed(() => {
+        if (importanceFilter.value === 'all') {
+            return statusFilteredTodos.value
+        }
+        return statusFilteredTodos.value.filter(todo =>
+            todo.importance === importanceFilter.value
+        )
+    })
+
+    // Поиск по задачам (по заголовку и описанию)
+    const searchFilteredTodos = computed(() => {
+        if (!searchQuery.value.trim()) {
+            return statusAndImportanceFilteredTodos.value
+        }
+
+        const query = searchQuery.value.toLowerCase().trim()
+        return statusAndImportanceFilteredTodos.value.filter(todo => {
+            const titleMatch = todo.title.toLowerCase().includes(query)
+            const descriptionMatch = todo.description ?
+                todo.description.toLowerCase().includes(query) : false
+            return titleMatch || descriptionMatch
+        })
+    })
+
+    // Финальная отфильтрованная коллекция с учетом всех фильтров и поиска
+    const filteredTodos = computed(() => searchFilteredTodos.value)
+
     // Функции для работы с пагинацией
     const totalPages = computed(() => {
-        return Math.ceil(filteredTodos.value.length / perPage.value)
+        return Math.ceil(filteredTodos.value.length / perPage.value) || 1
     })
 
     const setPage = (page) => {
@@ -42,37 +86,17 @@ export function useTodos(options = { perPage: 5 }) {
         }
     }
 
-    // Указатель на текущий фильтр
-    const filter = ref('all') // 'all', 'active', 'completed'
-
-    // Дополнительный фильтр по важности
-    const importanceFilter = ref('all') // 'all', 'low', 'normal', 'high'
-
-    // Отфильтрованные задачи с учетом статуса и важности
-    const filteredTodos = computed(() => {
-        let result = todos.value;
-
-        // Фильтр по статусу
-        if (filter.value === 'active') {
-            result = result.filter(todo => !todo.completed)
-        } else if (filter.value === 'completed') {
-            result = result.filter(todo => todo.completed)
-        }
-
-        // Фильтр по важности
-        if (importanceFilter.value !== 'all') {
-            result = result.filter(todo => todo.importance === importanceFilter.value)
-        }
-
-        return result
-    })
-
     // Задачи текущей страницы
     const paginatedTodos = computed(() => {
         const startIndex = (currentPage.value - 1) * perPage.value
         const endIndex = startIndex + perPage.value
         return filteredTodos.value.slice(startIndex, endIndex)
     })
+
+    // Сброс поиска
+    const clearSearch = () => {
+        searchQuery.value = ''
+    }
 
     // Дополнительные функции
     const getTodoById = (id) => {
@@ -84,12 +108,11 @@ export function useTodos(options = { perPage: 5 }) {
             total: todos.value ? todos.value.length : 0,
             completed: completedTodos.value ? completedTodos.value.length : 0,
             incomplete: incompleteTodos.value ? incompleteTodos.value.length : 0,
-            lowPriority: lowPriorityTodos.value ? lowPriorityTodos.value.length : 0,
-            normalPriority: normalPriorityTodos.value ? normalPriorityTodos.value.length : 0,
-            highPriority: highPriorityTodos.value ? highPriorityTodos.value.length : 0,
+            highPriority: todos.value ? todos.value.filter(todo => todo.importance === 'high').length : 0,
             percentCompleted: todos.value && todos.value.length
                 ? Math.round((completedTodos.value.length / todos.value.length) * 100)
-                : 0
+                : 0,
+            found: filteredTodos.value ? filteredTodos.value.length : 0
         }
     })
 
@@ -97,7 +120,6 @@ export function useTodos(options = { perPage: 5 }) {
         todos,
         completedTodos,
         incompleteTodos,
-        highPriorityTodos,
         todoStats,
         getTodoById,
         addTodo,
@@ -117,6 +139,10 @@ export function useTodos(options = { perPage: 5 }) {
         // Фильтры
         filter,
         importanceFilter,
-        filteredTodos
+        filteredTodos,
+
+        // Поиск
+        searchQuery,
+        clearSearch
     }
 }
