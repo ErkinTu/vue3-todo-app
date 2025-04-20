@@ -12,9 +12,12 @@ export function useTodos(options = { perPage: 5 }) {
     const todos = computed(() => todoStore.todos)
     const completedTodos = computed(() => todoStore.completedTodos)
     const incompleteTodos = computed(() => todoStore.incompleteTodos)
+    const lowPriorityTodos = computed(() => todoStore.lowPriorityTodos)
+    const normalPriorityTodos = computed(() => todoStore.normalPriorityTodos)
+    const highPriorityTodos = computed(() => todoStore.highPriorityTodos)
 
     // Получаем методы
-    const { addTodo, removeTodo, toggleTodo } = todoStore
+    const { addTodo, removeTodo, toggleTodo, updateTodoDetails } = todoStore
 
     // Функции для работы с пагинацией
     const totalPages = computed(() => {
@@ -39,17 +42,29 @@ export function useTodos(options = { perPage: 5 }) {
         }
     }
 
-    // Указатель на текущий фильтр (перенесено из компонента)
+    // Указатель на текущий фильтр
     const filter = ref('all') // 'all', 'active', 'completed'
 
-    // Отфильтрованные задачи
+    // Дополнительный фильтр по важности
+    const importanceFilter = ref('all') // 'all', 'low', 'normal', 'high'
+
+    // Отфильтрованные задачи с учетом статуса и важности
     const filteredTodos = computed(() => {
+        let result = todos.value;
+
+        // Фильтр по статусу
         if (filter.value === 'active') {
-            return todos.value.filter(todo => !todo.completed)
+            result = result.filter(todo => !todo.completed)
         } else if (filter.value === 'completed') {
-            return todos.value.filter(todo => todo.completed)
+            result = result.filter(todo => todo.completed)
         }
-        return todos.value
+
+        // Фильтр по важности
+        if (importanceFilter.value !== 'all') {
+            result = result.filter(todo => todo.importance === importanceFilter.value)
+        }
+
+        return result
     })
 
     // Задачи текущей страницы
@@ -69,6 +84,9 @@ export function useTodos(options = { perPage: 5 }) {
             total: todos.value ? todos.value.length : 0,
             completed: completedTodos.value ? completedTodos.value.length : 0,
             incomplete: incompleteTodos.value ? incompleteTodos.value.length : 0,
+            lowPriority: lowPriorityTodos.value ? lowPriorityTodos.value.length : 0,
+            normalPriority: normalPriorityTodos.value ? normalPriorityTodos.value.length : 0,
+            highPriority: highPriorityTodos.value ? highPriorityTodos.value.length : 0,
             percentCompleted: todos.value && todos.value.length
                 ? Math.round((completedTodos.value.length / todos.value.length) * 100)
                 : 0
@@ -79,11 +97,13 @@ export function useTodos(options = { perPage: 5 }) {
         todos,
         completedTodos,
         incompleteTodos,
+        highPriorityTodos,
         todoStats,
         getTodoById,
         addTodo,
         removeTodo,
         toggleTodo,
+        updateTodoDetails,
 
         // Пагинация
         currentPage,
@@ -96,6 +116,7 @@ export function useTodos(options = { perPage: 5 }) {
 
         // Фильтры
         filter,
+        importanceFilter,
         filteredTodos
     }
 }
