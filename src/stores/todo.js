@@ -16,11 +16,24 @@ export const useTodoStore = defineStore('todo', () => {
         todos.value.filter(todo => !todo.completed)
     )
 
+    // Фильтрация по важности
+    const lowPriorityTodos = computed(() =>
+        todos.value.filter(todo => todo.importance === 'low')
+    )
+    const normalPriorityTodos = computed(() =>
+        todos.value.filter(todo => todo.importance === 'normal')
+    )
+    const highPriorityTodos = computed(() =>
+        todos.value.filter(todo => todo.importance === 'high')
+    )
+
     // Действия
-    function addTodo(title) {
+    function addTodo(title, description = '', importance = 'normal') {
         const newTodo = {
             id: uuidv4(),
             title,
+            description,  // Новое поле для описания
+            importance,   // Новое поле для важности
             completed: false,
             createdAt: new Date().toISOString()
         }
@@ -42,12 +55,30 @@ export const useTodoStore = defineStore('todo', () => {
         }
     }
 
+    function updateTodoDetails(id, updates) {
+        const todoIndex = todos.value.findIndex(todo => todo.id === id)
+        if (todoIndex !== -1) {
+            // Обновляем задачу с новыми данными
+            todos.value[todoIndex] = {
+                ...todos.value[todoIndex],
+                ...updates
+            }
+            saveTodos(todos.value)
+            return todos.value[todoIndex]
+        }
+        return null
+    }
+
     return {
         todos,
         completedTodos,
         incompleteTodos,
+        lowPriorityTodos,
+        normalPriorityTodos,
+        highPriorityTodos,
         addTodo,
         removeTodo,
-        toggleTodo
+        toggleTodo,
+        updateTodoDetails
     }
 })
