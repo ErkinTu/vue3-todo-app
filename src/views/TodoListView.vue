@@ -5,6 +5,7 @@ import BaseInput from '../components/common/BaseInput.vue'
 import BaseButton from '../components/common/BaseButton.vue'
 import TodoItem from '../components/todo/TodoItem.vue'
 import TodoFilter from '../components/todo/TodoFilter.vue'
+import TodoSearch from '../components/todo/TodoSearch.vue'
 import Pagination from '../components/todo/Pagination.vue'
 
 // Используем обновленный composable с опциями пагинации
@@ -12,10 +13,13 @@ const {
   addTodo,
   filter,
   importanceFilter,
+  searchQuery,
+  clearSearch,
   paginatedTodos,
   currentPage,
   totalPages,
-  setPage
+  setPage,
+  todoStats
 } = useTodos({ perPage: 10 })
 
 const newTodoTitle = ref('')
@@ -56,6 +60,13 @@ function handlePageChange(page) {
 
 function toggleAdvancedOptions() {
   showAdvancedOptions.value = !showAdvancedOptions.value
+}
+
+// Обработчик изменения поискового запроса
+function updateSearchQuery(query) {
+  searchQuery.value = query
+  // Сбрасываем страницу при изменении поиска
+  setPage(1)
 }
 </script>
 
@@ -122,6 +133,16 @@ function toggleAdvancedOptions() {
       </div>
     </div>
 
+    <!-- Компонент поиска -->
+    <TodoSearch
+        :search-query="searchQuery"
+        :total-results="todoStats.found"
+        :total-todos="todoStats.total"
+        @update:search-query="updateSearchQuery"
+        @clear-search="clearSearch"
+        class="mb-4"
+    />
+
     <TodoFilter
         :filter="filter"
         :importance-filter="importanceFilter"
@@ -145,12 +166,22 @@ function toggleAdvancedOptions() {
     </div>
 
     <div v-else class="bg-white rounded-lg shadow-md p-6 text-center text-gray-500 dark:bg-gray-800 dark:text-gray-400">
-      <p v-if="filter !== 'all' || importanceFilter !== 'all'" class="dark:text-gray-300">
-        Нет задач, соответствующих выбранным фильтрам
-      </p>
-      <p v-else class="dark:text-gray-300">
-        У вас пока нет задач. Создайте первую!
-      </p>
+      <template v-if="searchQuery">
+        <p class="dark:text-gray-300">По запросу «{{ searchQuery }}» ничего не найдено</p>
+        <BaseButton @click="clearSearch" variant="secondary" class="mt-3">
+          Очистить поиск
+        </BaseButton>
+      </template>
+      <template v-else-if="filter !== 'all' || importanceFilter !== 'all'">
+        <p class="dark:text-gray-300">
+          Нет задач, соответствующих выбранным фильтрам
+        </p>
+      </template>
+      <template v-else>
+        <p class="dark:text-gray-300">
+          У вас пока нет задач. Создайте первую!
+        </p>
+      </template>
     </div>
   </div>
 </template>
