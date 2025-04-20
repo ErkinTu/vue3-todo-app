@@ -1,7 +1,6 @@
 <script setup>
-import { ref, watch } from 'vue'
+import {ref, watch} from 'vue'
 import BaseInput from '../common/BaseInput.vue'
-import BaseButton from '../common/BaseButton.vue'
 
 const props = defineProps({
   searchQuery: {
