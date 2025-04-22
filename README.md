@@ -16,8 +16,10 @@ Once everything’s installed, fire up the development server with:
 ```bash
 npm run dev
 ```
-Boom 💥 — your app should now be live at http://localhost:5173 (or whatever Vite tells you in the terminal).
+Boom 💥 — your app should now be live at http://localhost:3000 (or whatever Vite tells you in the terminal).
 Start building, testing, and pretending like everything's under control 😅
+
+vite.config.js: port: 3000; open: true;
 <!--
 ## 🏗️ Step 3: Build for production
 Want to impress your future self or your team?
