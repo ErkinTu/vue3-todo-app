@@ -18,7 +18,7 @@ npm run dev
 ```
 Boom 💥 — your app should now be live at http://localhost:5173 (or whatever Vite tells you in the terminal).
 Start building, testing, and pretending like everything's under control 😅
-
+<!--
 ## 🏗️ Step 3: Build for production
 Want to impress your future self or your team?
 Create an optimized production build with:
@@ -35,7 +35,7 @@ Wanna see how your production build looks before deploying?
 npm run preview
 ```
 It’ll spin up a local server that mimics production. No surprises later, promise 🤞
-
+-->
 ### 📦 What’s in the package?
 Here’s what powers this beast:
 
